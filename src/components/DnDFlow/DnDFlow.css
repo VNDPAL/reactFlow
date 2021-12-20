@@ -4,7 +4,7 @@
 } */
 html,
 body {
-  background-color: rgb(255, 255, 255);
+  background-color: rgb(189, 241, 188);
   font-family: nt-dapper, -apple-system, system-ui, BlinkMacSystemFont,
     "Segoe UI", Roboto, "Helvetica Neue", Ubuntu, Arial, sans-serif;
   font-weight: 400;
@@ -88,4 +88,8 @@ body {
 
 .react-flow__edge-path {
     stroke-width: 2;
+}
+
+.react-flow__edge-path:hover {
+  stroke-width: 8;
 }

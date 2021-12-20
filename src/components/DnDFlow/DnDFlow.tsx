@@ -191,10 +191,10 @@ const DnDFlow = () => {
     custom: CustomNodeComponent,
   };
   
-  const onRestore = useCallback(() => {
+  const onRestore = useCallback((pathwayName:any) => {
     const restoreFlow = async () => {
-      const flow:any = await JSON.parse(localStorage.getItem('reactFlow') || '[]');
-
+      const ls:any = await JSON.parse(localStorage.getItem('reactFlow') || '[]');
+      let flow = ls.find((x:any)=>x.pathwayName===pathwayName).pathway;
       if (flow) {
         const [x = 0, y = 0] = flow.position;
         setElements(flow.elements || []);
