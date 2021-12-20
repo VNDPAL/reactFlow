@@ -3,7 +3,7 @@ import "./SidebarConnection.css";
 const SidebarConnection = () => {
 
   return (
-    <aside>
+    <aside className="connectionAside">
       <div className="sidebarConnection">
         Branch Condition
       </div>

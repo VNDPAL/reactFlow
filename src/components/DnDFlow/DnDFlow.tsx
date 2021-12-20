@@ -15,6 +15,7 @@ import ReactFlow, {
   ConnectionMode,
   isEdge,
   isNode,
+  useZoomPanHelper,
 } from "react-flow-renderer";
 import Sidebar from "../Sidebar";
 import closeIcon from '../../assets/icons/closeIcon.svg';
@@ -47,7 +48,17 @@ const DnDFlow = () => {
 
   const onConnect = (params: Edge<any> | Connection) => {
     setconnectionSidebar(()=>true);
-    setElements((els: any) => addEdge(params, els));
+    setElements((els: any) => {
+      let eles = addEdge(params, els);
+      const clone = [...eles];
+      let ele:any = clone.filter((x:any)=>x.source===params.source && x.sourceHandle===params.sourceHandle && x.target==params.target && x.targetHandle===params.targetHandle)[0];
+      ele.type = 'smoothstep';
+      ele.label = 'smoothstep';
+      ele.arrowHeadType = 'arrowclosed';
+      let val = clone.filter((x:any)=>!(x.source===params.source && x.sourceHandle===params.sourceHandle && x.target==params.target && x.targetHandle===params.targetHandle));
+      val.push(ele);
+      return val;
+    });
   };
 
   const onElementsRemove = (elementsToRemove: Elements<any>) =>
@@ -60,6 +71,7 @@ const DnDFlow = () => {
     });
   };
   const onElementClick = (event: any,element:any) => {
+      console.log(reactFlowInstance.toObject());
       if(isNode(element))
       {
           setnodeDetailsSidebar(()=>true);
@@ -67,17 +79,6 @@ const DnDFlow = () => {
       }
       if(isEdge(element))
       {
-        setElements((state:any) => {
-            const clone = [...state];
-            let ele = clone.filter((x)=>x.id===element.id)[0];
-            ele.type = 'smoothstep';
-            ele.label = 'smoothstep';
-            ele.arrowHeadType = 'arrowclosed';
-            ele.style = {'color':'red'};
-            let val = clone.filter((x)=>x.id !== element.id);
-            val.push(ele);
-            return val;
-        });
         setnodeDetailsSidebar(()=>false);
         setconnectionSidebar(()=>true); 
       }
@@ -189,11 +190,24 @@ const DnDFlow = () => {
   const nodeTypes = {
     custom: CustomNodeComponent,
   };
+  
+  const onRestore = useCallback(() => {
+    const restoreFlow = async () => {
+      const flow:any = await JSON.parse(localStorage.getItem('reactFlow') || '[]');
+
+      if (flow) {
+        const [x = 0, y = 0] = flow.position;
+        setElements(flow.elements || []);
+      }
+    };
+
+    restoreFlow();
+  }, [setElements]);
 
   return (
     <div className="dndflow">
       <ReactFlowProvider>
-        <Sidebar ele={elements} stateChanger={setElements}/>
+        <Sidebar ele={elements} restore={onRestore} rfInstance={reactFlowInstance}/>
         <div className="reactflow-wrapper" ref={reactFlowWrapper}>
           <ReactFlow
             elements={elements}

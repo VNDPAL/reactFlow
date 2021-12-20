@@ -1,7 +1,7 @@
 import "./SidebarNode.css";
 const SidebarNode = () => {
   return (
-    <aside>
+    <aside className="nodeAside">
       <div className="sidebarNode">
         Node Details
       </div>

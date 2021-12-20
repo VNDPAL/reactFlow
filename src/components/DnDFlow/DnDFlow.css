@@ -33,6 +33,13 @@ body {
   font-size: 12px;
   padding: 15px 10px;
 }
+
+.dndflow aside.nodeAside,
+.dndflow aside.connectionAside
+{
+  width: 25%;
+}
+
 .right-side-bar {
   max-width: 250px;
   width: 20%;

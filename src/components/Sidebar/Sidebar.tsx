@@ -1,7 +1,7 @@
 import { DragEvent } from "react";
 import "./Sidebar.css";
 
-const Sidebar = ({ele,stateChanger}:any) => {
+const Sidebar = ({ele,restore,rfInstance}:any) => {
   const onDragStart = (event: DragEvent<HTMLDivElement>, nodeType: string) => {
     event.dataTransfer.setData("application/reactflow", nodeType);
     event.dataTransfer.effectAllowed = "move";
@@ -9,11 +9,11 @@ const Sidebar = ({ele,stateChanger}:any) => {
 
   const onSave = ()=>{
       console.log(ele);
-      localStorage.setItem('reactFlow',JSON.stringify(ele));
+      localStorage.setItem('reactFlow',JSON.stringify(rfInstance.toObject()));
   };
   const onRestore = ()=>{
     console.log('restore');
-    stateChanger(JSON.parse(localStorage.getItem('reactFlow') || '[]'));
+    restore();
   };
 
   return (
