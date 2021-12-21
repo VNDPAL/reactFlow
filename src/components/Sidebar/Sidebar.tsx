@@ -2,10 +2,18 @@ import { DragEvent, Key, MouseEventHandler, useState } from "react";
 import Popup from "reactjs-popup";
 import "./Sidebar.css";
 import "reactjs-popup/dist/index.css";
+import pic from '../../assets/images/questionNode.jpg';
+import linkPathwaypic from '../../assets/images/linkPathway.png';
+import callPluginpic from '../../assets/images/callPlugin.jpg';
+import determinationpic from '../../assets/images/determination.jpg';
+import superpic from '../../assets/images/super.png';
+import annotationpic from '../../assets/images/abc.webp';
+import linkPagepic from '../../assets/images/linkPage.png';
 
 const Sidebar = ({ ele, restore, rfInstance }: any) => {
-  const onDragStart = (event: DragEvent<HTMLDivElement>, nodeType: string) => {
+  const onDragStart = (event: DragEvent<HTMLDivElement>, nodeType: string,img:string) => {
     event.dataTransfer.setData("application/reactflow", nodeType);
+    event.dataTransfer.setData("application/reactflow/images", img);
     event.dataTransfer.effectAllowed = "move";
   };
 
@@ -36,38 +44,59 @@ const Sidebar = ({ ele, restore, rfInstance }: any) => {
       <div className="description">Pathway Designer</div>
       <div
         className="dndnode custom"
-        onDragStart={(event) => onDragStart(event, "Ask A Question")}
+        onDragStart={(event) => onDragStart(event, "Ask A Question(s)",pic)}
         draggable
       >
-        Ask A Question
+        <img src={pic} />
+        <label>Ask A Question(s)</label> 
       </div>
       <div
         className="dndnode custom"
-        onDragStart={(event) => onDragStart(event, "Add A Determination")}
+        onDragStart={(event) => onDragStart(event, "Link to Pathway",linkPathwaypic)}
         draggable
       >
-        Add A Determination
+        <img src={linkPathwaypic} />
+        <label>Link to Pathway</label> 
       </div>
       <div
         className="dndnode custom"
-        onDragStart={(event) => onDragStart(event, "Add A Plugin")}
+        onDragStart={(event) => onDragStart(event, "Call A Plugin",callPluginpic)}
         draggable
       >
-        Add A Plugin
+        <img src={callPluginpic} />
+        <label>Call A Plugin</label> 
       </div>
       <div
         className="dndnode custom"
-        onDragStart={(event) => onDragStart(event, "Link To Pathway")}
+        onDragStart={(event) => onDragStart(event, "Add Determination",determinationpic)}
         draggable
       >
-        Link To Pathway
+        <img src={determinationpic} />
+        <label>Add Determination</label> 
       </div>
       <div
         className="dndnode custom"
-        onDragStart={(event) => onDragStart(event, "Link To Page")}
+        onDragStart={(event) => onDragStart(event, "Add a 'Super' Node",superpic)}
         draggable
       >
-        Link To Page
+        <img src={superpic} />
+        <label>Add a 'Super' Node</label> 
+      </div>
+      <div
+        className="dndnode custom"
+        onDragStart={(event) => onDragStart(event, "Add an Annotation",annotationpic)}
+        draggable
+      >
+        <img src={annotationpic} />
+        <label>Add an Annotation</label> 
+      </div>
+      <div
+        className="dndnode custom"
+        onDragStart={(event) => onDragStart(event, "Link to a Page",linkPagepic)}
+        draggable
+      >
+        <img src={linkPagepic} />
+        <label>Link to a Page</label> 
       </div>
       <div>
         <Popup trigger={<button className="button"> Save </button>} modal>

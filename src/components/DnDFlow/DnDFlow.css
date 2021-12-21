@@ -53,12 +53,14 @@ body {
 .dndflow .dndnode {
   align-items: center;
   border: 1px solid #1a192b;
-  border-radius: 2px;
+  border-radius: 20px;
   cursor: grab;
   display: flex;
-  height: 20px;
+  height: 60px;
+  width: 120px;
   justify-content: center;
   padding: 4px;
+  flex-direction: column;
 }
 
 .dndflow .dndnode.input {
@@ -92,4 +94,36 @@ body {
 
 .react-flow__edge-path:hover {
   stroke-width: 8;
+}
+
+.handleSelect{
+  border-radius: 0;
+  /* opacity: 0; */
+}
+
+.handleSelect:hover{
+  border-radius: 0;
+  /* opacity: 0; */
+  width: 15px;
+  height: 15px;
+  background: rgb(235, 124, 109);
+}
+
+.customNodeStyles{
+  color: black;
+  height: 80px;
+  width: 160px;
+  padding: 4px;
+  background: white;
+  align-items: center;
+  border: 1px solid #1a192b;
+  border-radius: 20px;
+  cursor: grab;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+};
+
+.customNodeStyles:hover{
+  opacity: 0;
 }
