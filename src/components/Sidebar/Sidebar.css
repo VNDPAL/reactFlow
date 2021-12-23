@@ -43,3 +43,11 @@ img {
     justify-content: space-between;
     justify-content: space-around;
 }
+
+.popUps{
+  margin-top: 25px;
+  padding: 5px;
+  gap: 10px;
+  display: flex;
+  flex-direction: column;
+}

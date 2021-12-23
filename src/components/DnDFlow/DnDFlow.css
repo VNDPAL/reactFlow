@@ -98,15 +98,18 @@ body {
 
 .handleSelect{
   border-radius: 0;
-  /* opacity: 0; */
+  opacity: 0;
 }
 
 .handleSelect:hover{
   border-radius: 0;
-  /* opacity: 0; */
   width: 15px;
   height: 15px;
   background: rgb(235, 124, 109);
+}
+
+.customNodeStyles:hover .handleSelect{
+  opacity: 1;
 }
 
 .customNodeStyles{
@@ -124,6 +127,3 @@ body {
   flex-direction: column;
 };
 
-.customNodeStyles:hover{
-  opacity: 0;
-}
