@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="50" height="50" viewBox="0 0 172 172" style=" fill:#000000;">
+    <g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal">
+        <path d="M0,172v-172h172v172z" fill="none"></path>
+        <g fill="#1abc9c">
+            <path d="M27.52,13.76c-5.848,0 -10.32,4.472 -10.32,10.32v123.84c0,5.848 4.472,10.32 10.32,10.32h123.84c5.848,0 10.32,-4.472 10.32,-10.32v-102.51469c0,-1.032 -0.34669,-1.71731 -1.03469,-2.40531l-28.20531,-28.20531c-0.688,-0.688 -1.37331,-1.03469 -2.40531,-1.03469zM44.72,20.64h82.56v41.28c0,3.784 -3.096,6.88 -6.88,6.88h-68.8c-3.784,0 -6.88,-3.096 -6.88,-6.88zM99.76,30.96v27.52h13.76v-27.52zM51.6,92.88h75.68c3.784,0 6.88,3.096 6.88,6.88v51.6h-89.44v-51.6c0,-3.784 3.096,-6.88 6.88,-6.88zM27.52,141.04h6.88v6.88h-6.88zM144.48,141.04h6.88v6.88h-6.88z"></path>
+        </g>
+    </g>
+</svg>

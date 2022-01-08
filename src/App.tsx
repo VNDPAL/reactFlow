@@ -1,6 +1,5 @@
-import './App.css';
-import DnDFlow from './components/DnDFlow';
-import Sidebar from './components/Sidebar';
+import DnDFlow from "./components/DnDFlow";
+import "./App.scss";
 
 function App() {
   return (

@@ -1,0 +1,39 @@
+.dndflow {
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+  background-color: #9cd19b;
+  .reactflow-wrapper {
+    flex-grow: 1;
+    height: 100vh;
+  }
+}
+
+.right-side-bar {
+  max-width: 250px;
+  width: 20%;
+}
+
+.save__controls {
+  font-size: 12px;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  z-index: 4;
+}
+
+.react-flow {
+  &__edge {
+    &.selected #{&}-path {
+      stroke: rgb(231, 18, 18);
+    }
+
+    &-path {
+      stroke: #e9514ce1;
+      stroke-width: 2;
+      &:hover {
+        stroke-width: 8;
+      }
+    }
+  }
+}

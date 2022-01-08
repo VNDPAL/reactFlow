@@ -1,0 +1,74 @@
+.customnode {
+  color: black;
+  height: 80px;
+  width: 160px;
+  padding: 4px;
+  background: white;
+  align-items: center;
+  border: 1px solid #ebebeb;
+  border-radius: 10px;
+  cursor: grab;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  box-shadow: 0px 4px 16px -4px #1abc9c66;
+  text-align: center;
+  y img {
+    max-width: 50px;
+  }
+  &__text {
+    overflow: hidden;
+    width: 100%;
+  }
+  &:hover {
+    .customnode__handle {
+      opacity: 1;
+      border-radius: 0;
+      width: 15px;
+      height: 15px;
+      background: rgb(235, 124, 109);
+    }
+  }
+  &__handle {
+    border-radius: 0;
+    opacity: 0;
+    &:nth-child(1) {
+      top: 50%;
+      left: 0;
+      transform: translate(-50%, -50%);
+    }
+    &:nth-child(2) {
+      top: 100%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    &:nth-child(3) {
+      top: 50%;
+      left: 100%;
+      transform: translate(-50%, -50%);
+    }
+    &:nth-child(4) {
+      transform: translate(-50%, -50%);
+    }
+    &:nth-child(5) {
+      top: 0;
+      left: 0;
+      transform: translate(-50%, -50%);
+    }
+    &:nth-child(6) {
+      top: 0;
+      left: 100%;
+      transform: translate(-50%, -50%);
+    }
+    &:nth-child(7) {
+      top: 100%;
+      left: 0;
+      transform: translate(-50%, -50%);
+    }
+    &:nth-child(8) {
+      top: 100%;
+      left: 100%;
+      transform: translate(-50%, -50%);
+    }
+  }
+}

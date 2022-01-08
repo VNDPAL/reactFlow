@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback, useEffect } from "react";
+import { useState, useRef, useCallback, useEffect, FC } from "react";
 import ReactFlow, {
   ReactFlowProvider,
   addEdge,
@@ -9,46 +9,51 @@ import ReactFlow, {
   Elements,
   Background,
   BackgroundVariant,
-  Handle,
-  Position,
-  ConnectionLineType,
   ConnectionMode,
   isEdge,
   isNode,
-  useZoomPanHelper,
 } from "react-flow-renderer";
 import Sidebar from "../Sidebar";
-import closeIcon from "../../assets/icons/closeIcon.svg";
-import "./DnDFlow.css";
 import SidebarNode from "../SidebarNode";
 import SidebarConnection from "../SidebarConnection";
-import { isElement } from "react-dom/test-utils";
-import pic from "../../assets/images/questionNode.jpg";
+import { useInitElement } from "../../common/hooks";
+import { getNode } from "../../common/util";
+import { SidebarItems } from "../../common/const";
+import CustomNode from "./CustomNode";
+import "./DnDFlow.scss";
 
-let id = 0;
-const getId = () => `dndnode_${id++}`;
-const initialElements: any = [
-  {
-    id: getId(),
-    type: "custom",
-    data: { text: "Ask A Question", img: pic },
-    position: { x: 250, y: 5 },
-  },
-];
-
-const DnDFlow = () => {
+const DnDFlow: FC = () => {
   const reactFlowWrapper = useRef<any>(null);
   const [reactFlowInstance, setReactFlowInstance] = useState<any>(null);
-  const [elements, setElements] = useState<any>(initialElements);
+  const [id, nextId] = useInitElement();
+  const [elements, setElements] = useState<any>([]);
   const [nodeDetailsSidebar, setnodeDetailsSidebar] = useState<any>(false);
   const [connectionSidebar, setconnectionSidebar] = useState<any>(false);
+  const [currentConnection, setcurrentConnection] = useState<any>(null);
+  const [currentConnectionText, setcurrentConnectionText] = useState<any>("");
+  const [currentDisplayText, setcurrentDisplayText] = useState<any>("");
+  const [currentNode, setcurrentNode] = useState<any>("");
 
   useEffect(() => {
-    console.log(elements);
+    console.log(elements, "[elements]");
   }, [elements]);
 
+  useEffect(() => {
+    nextId();
+    const [questionNode] = SidebarItems;
+    const nodeData = getNode(
+      id,
+      "custom",
+      { x: 250, y: 50 },
+      { ...questionNode }
+    );
+    setElements([nodeData]);
+  }, []);
+
   const onConnect = (params: Edge<any> | Connection) => {
-    setconnectionSidebar(() => true);
+    setcurrentConnection(params);
+    setcurrentConnectionText("");
+    setconnectionSidebar(() => false);
     setElements((els: any) => {
       let eles = addEdge(params, els);
       const clone = [...eles];
@@ -60,7 +65,7 @@ const DnDFlow = () => {
           x.targetHandle === params.targetHandle
       )[0];
       ele.type = "smoothstep";
-      ele.label = "smoothstep";
+      ele.label = "";
       ele.arrowHeadType = "arrowclosed";
       let val = clone.filter(
         (x: any) =>
@@ -74,6 +79,7 @@ const DnDFlow = () => {
       val.push(ele);
       return val;
     });
+    setconnectionSidebar(() => true);
   };
 
   const onElementsRemove = (elementsToRemove: Elements<any>) =>
@@ -87,15 +93,22 @@ const DnDFlow = () => {
       );
     });
   };
+
   const onElementClick = (event: any, element: any) => {
-    console.log(reactFlowInstance.toObject());
+    setnodeDetailsSidebar(() => false);
+    setconnectionSidebar(() => false);
     if (isNode(element)) {
       setnodeDetailsSidebar(() => true);
-      setconnectionSidebar(() => false);
+      setcurrentNode(() => element.id);
+      setcurrentDisplayText(
+        () => elements.filter((x: any) => x.id == element.id)[0].data.text
+      );
     }
     if (isEdge(element)) {
-      setnodeDetailsSidebar(() => false);
       setconnectionSidebar(() => true);
+      setcurrentConnectionText(
+        () => elements.filter((x: any) => x.id == element.id)[0].label
+      );
     }
   };
 
@@ -130,79 +143,60 @@ const DnDFlow = () => {
       x: event.clientX - reactFlowBounds.left,
       y: event.clientY - reactFlowBounds.top,
     });
-    const newNode = {
-      id: getId(),
-      type: "custom",
-      position,
-      data: { text: type, img: images },
-    };
+    const newNode = getNode(id, "custom", position, {
+      text: type,
+      img: images,
+    });
 
     setElements((es: any) => es.concat(newNode));
+
+    nextId();
   };
 
-  const CustomNodeComponent = ({ data }: any) => {
-    return (
-      <div className="customNodeStyles">
-        <img draggable={false} src={data.img} />
-        <div>{data.text}</div>
-        <Handle
-          type="target"
-          position={Position.Left}
-          className="handleSelect"
-        />
-        <Handle
-          type="target"
-          position={Position.Bottom}
-          id="d"
-          className="handleSelect"
-        />
-        <Handle
-          type="target"
-          position={Position.Right}
-          id="a"
-          className="handleSelect"
-        />
-        <Handle
-          type="target"
-          position={Position.Top}
-          id="c"
-          className="handleSelect"
-        />
-        <Handle
-          type="source"
-          position={Position.Top}
-          id="topLeft"
-          style={{ left: "0%" }}
-          className="handleSelect"
-        />
-        <Handle
-          type="source"
-          position={Position.Top}
-          id="topRight"
-          style={{ left: "100%" }}
-          className="handleSelect"
-        />
-        <Handle
-          type="source"
-          position={Position.Bottom}
-          id="bottomLeft"
-          style={{ left: "0%" }}
-          className="handleSelect"
-        />
-        <Handle
-          type="source"
-          position={Position.Bottom}
-          id="bottomRight"
-          style={{ left: "100%" }}
-          className="handleSelect"
-        />
-      </div>
-    );
-  };
+  const setStateFromConnectionSidebar = useCallback(
+    (params: any, eleVal: any) => {
+      setcurrentConnectionText(eleVal);
+      setElements((els: any) => {
+        const clone = [...els];
+        let ele: any = clone.filter(
+          (x: any) =>
+            x.source === params.source &&
+            x.sourceHandle === params.sourceHandle &&
+            x.target == params.target &&
+            x.targetHandle === params.targetHandle
+        )[0];
+        ele.type = "smoothstep";
+        ele.label = eleVal;
+        ele.arrowHeadType = "arrowclosed";
+        let val = clone.filter(
+          (x: any) =>
+            !(
+              x.source === params.source &&
+              x.sourceHandle === params.sourceHandle &&
+              x.target == params.target &&
+              x.targetHandle === params.targetHandle
+            )
+        );
+        val.push(ele);
+        return val;
+      });
+    },
+    [setElements]
+  );
 
-  const nodeTypes = {
-    custom: CustomNodeComponent,
-  };
+  const setStateFromNodeSidebar = useCallback(
+    (nodeId: any, textFromSidebar: any) => {
+      setElements((els: any) => {
+        const clone = [...els];
+        let ele: any = clone.filter((x: any) => x.id === nodeId)[0];
+        ele.data.text = textFromSidebar;
+        let val = clone.filter((x: any) => !(x.id === nodeId));
+        val.push(ele);
+        return val;
+      });
+    },
+    [setElements]
+  );
 
   const onRestore = useCallback(
     (pathwayName: any) => {
@@ -224,32 +218,49 @@ const DnDFlow = () => {
 
   return (
     <div className="dndflow">
-      <ReactFlowProvider>
-        <Sidebar
-          ele={elements}
-          restore={onRestore}
-          rfInstance={reactFlowInstance}
-        />
-        <div className="reactflow-wrapper" ref={reactFlowWrapper}>
-          <ReactFlow
-            elements={elements}
-            onConnect={onConnect}
-            onElementsRemove={onElementsRemove}
-            onLoad={onLoad}
-            onDrop={onDrop}
-            onDragOver={onDragOver}
-            nodeTypes={nodeTypes}
-            onNodeDoubleClick={onNodeDoubleClick}
-            onElementClick={onElementClick}
-            onPaneClick={onPanelClick}
-          >
-            <Controls />
-            <Background variant={BackgroundVariant.Lines} />
-          </ReactFlow>
-        </div>
-        {nodeDetailsSidebar ? <SidebarNode /> : ""}
-        {connectionSidebar ? <SidebarConnection /> : ""}
-      </ReactFlowProvider>
+      {elements.length && (
+        <ReactFlowProvider>
+          <Sidebar
+            ele={elements}
+            restore={onRestore}
+            rfInstance={reactFlowInstance}
+          />
+          <div className="reactflow-wrapper" ref={reactFlowWrapper}>
+            <ReactFlow
+              elements={elements}
+              onConnect={onConnect}
+              onElementsRemove={onElementsRemove}
+              onLoad={onLoad}
+              onDrop={onDrop}
+              onDragOver={onDragOver}
+              nodeTypes={{
+                custom: CustomNode,
+              }}
+              onNodeDoubleClick={onNodeDoubleClick}
+              onElementClick={onElementClick}
+              onPaneClick={onPanelClick}
+              connectionMode={ConnectionMode.Loose}
+            >
+              <Controls />
+              <Background variant={BackgroundVariant.Lines} />
+            </ReactFlow>
+          </div>
+          {nodeDetailsSidebar && (
+            <SidebarNode
+              curDisplayText={currentDisplayText}
+              curNode={currentNode}
+              displayTextStateChanger={setStateFromNodeSidebar}
+            />
+          )}
+          {connectionSidebar && (
+            <SidebarConnection
+              elementsStateChanger={setStateFromConnectionSidebar}
+              curConnection={currentConnection}
+              curConnectionText={currentConnectionText}
+            />
+          )}
+        </ReactFlowProvider>
+      )}
     </div>
   );
 };
