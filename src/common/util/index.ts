@@ -85,6 +85,7 @@ const getExistingPathway = (existingpathway: any) => {
   console.log(a5);
 
   let ls = JSON.parse(localStorage.getItem("reactFlow") || "[]");
+  ls = ls.filter((x: any) => x.pathwayName !== "testFromExisting");
   let pw = {
     pathwayName: "testFromExisting",
     pathway: {
