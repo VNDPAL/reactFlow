@@ -17,7 +17,9 @@ const DnDPopUpExisting: FC<DnDPopUpExistingProps> = ({
   const [pathwayList, setpathwayList] = useState([]);
   const handlePathwayNameChange = async (evt: any) => {
     const pathwayName = evt.target.value;
-    const response = await fetch("https://localhost:7259/GetDiagram");
+    const response = await fetch(
+      "https://localhost:7259/GetDiagram?pathwayName=" + pathwayName
+    );
     const data: any = response.json();
     const a = data.then((x: any) => {
       console.log(x, "then diagram");
@@ -54,11 +56,11 @@ const DnDPopUpExisting: FC<DnDPopUpExistingProps> = ({
           </button>
           <div className="DnDPopUp__header">Open Existing Pathway</div>
           <div className="DnDPopUp__content">
-            <input
+            {/* <input
               type="text"
               onChange={onXmlChange}
               placeholder="paste your xml here"
-            />
+            /> */}
             <select onChange={handlePathwayNameChange}>
               <option value="">Select pathway</option>
               {pathwayList.map((pw: any, key: any) => (
