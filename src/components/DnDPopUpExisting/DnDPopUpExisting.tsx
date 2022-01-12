@@ -1,4 +1,4 @@
-import { FC, MouseEventHandler } from "react";
+import { FC, MouseEventHandler, useEffect, useState } from "react";
 import Popup from "reactjs-popup";
 import ExistingIcon from "../../assets/icons/favfile.svg";
 import "./DnDPopUpExisting.scss";
@@ -14,6 +14,30 @@ const DnDPopUpExisting: FC<DnDPopUpExistingProps> = ({
   openExistingPath,
   onRestore,
 }) => {
+  const [pathwayList, setpathwayList] = useState([]);
+  const handlePathwayNameChange = async (evt: any) => {
+    const pathwayName = evt.target.value;
+    const response = await fetch("https://localhost:7259/GetDiagram");
+    const data: any = response.json();
+    const a = data.then((x: any) => {
+      console.log(x, "then diagram");
+      onXmlChange(x);
+    });
+  };
+
+  useEffect(() => {
+    fetchDataFromBackend();
+  }, []);
+
+  const fetchDataFromBackend = async () => {
+    const response = await fetch("https://localhost:7259/GetPathways");
+    const data: any = response.json();
+    const a = data.then((x: any) => {
+      console.log(x, "then");
+      setpathwayList(() => x);
+    });
+  };
+
   return (
     <Popup
       trigger={
@@ -35,6 +59,14 @@ const DnDPopUpExisting: FC<DnDPopUpExistingProps> = ({
               onChange={onXmlChange}
               placeholder="paste your xml here"
             />
+            <select onChange={handlePathwayNameChange}>
+              <option value="">Select pathway</option>
+              {pathwayList.map((pw: any, key: any) => (
+                <option key={key} value={pw}>
+                  {pw}
+                </option>
+              ))}
+            </select>
           </div>
           <div className="DnDPopUp__actions">
             <button className="button" onClick={openExistingPath}>

@@ -63,8 +63,11 @@ const Sidebar: FC<SidebarProps> = ({ ele, restore, rfInstance }) => {
   const handleSelectedPathway = (evt: any) => {
     setselectedpathway(evt.target.value);
   };
+  // const handleXmlChange = (evt: any) => {
+  //   setexistingpathway(evt.target.value);
+  // };
   const handleXmlChange = (evt: any) => {
-    setexistingpathway(evt.target.value);
+    setexistingpathway(evt);
   };
 
   return (
