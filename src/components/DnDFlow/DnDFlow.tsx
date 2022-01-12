@@ -12,6 +12,7 @@ import ReactFlow, {
   ConnectionMode,
   isEdge,
   isNode,
+  MiniMap,
 } from "react-flow-renderer";
 import Sidebar from "../Sidebar";
 import SidebarNode from "../SidebarNode";
@@ -241,6 +242,23 @@ const DnDFlow: FC = () => {
               onPaneClick={onPanelClick}
               connectionMode={ConnectionMode.Loose}
             >
+              <MiniMap
+                nodeStrokeColor={(n: any) => {
+                  if (n.style?.background) return n.style.background;
+                  if (n.type === "input") return "#0041d0";
+                  if (n.type === "output") return "#ff0072";
+                  if (n.type === "default") return "#1a192b";
+                  if (n.type === "custom") return "red";
+
+                  return "#eee";
+                }}
+                nodeColor={(n: any) => {
+                  if (n.style?.background) return n.style.background;
+
+                  return "#fff";
+                }}
+                nodeBorderRadius={3}
+              />
               <Controls />
               <Background variant={BackgroundVariant.Lines} />
             </ReactFlow>
