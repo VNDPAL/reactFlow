@@ -90,7 +90,7 @@ const getExistingPathway = (existingpathway: any) => {
     ];
   }
 
-  if (!q1) {
+  if (q1) {
     const c = q1.map((p: any) => ({
       arrowHeadType: "arrowclosed",
       id: p.BranchId,
