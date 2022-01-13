@@ -53,21 +53,42 @@ const getExistingPathway = (existingpathway: any) => {
   console.log("[mine]", q1);
   const a4 = a3.DesignerItems;
   const a5 = a4.DesignerItem;
-  const b = a5.map((p: any) => ({
-    data: {
-      text: p.DisplayText.split(" ").slice(1).join(" "),
-      img: p.Content.includes("Question.png")
-        ? questionNodesvg
-        : p.Content.includes("Plugin.png")
-        ? callPluginpic
-        : p.Content.includes("Determination.png")
-        ? determinationpic
-        : superpic,
-    },
-    id: p.ID,
-    position: { x: p.Left, y: p.Top },
-    type: "custom",
-  }));
+  let b;
+  if (a5.length) {
+    b = a5.map((p: any) => ({
+      data: {
+        text: p.DisplayText.split(" ").slice(1).join(" "),
+        img: p.Content.includes("Question.png")
+          ? questionNodesvg
+          : p.Content.includes("Plugin.png")
+          ? callPluginpic
+          : p.Content.includes("Determination.png")
+          ? determinationpic
+          : superpic,
+      },
+      id: p.ID,
+      position: { x: p.Left, y: p.Top },
+      type: "custom",
+    }));
+  } else {
+    b = [
+      {
+        data: {
+          text: a5.DisplayText.split(" ").slice(1).join(" "),
+          img: a5.Content.includes("Question.png")
+            ? questionNodesvg
+            : a5.Content.includes("Plugin.png")
+            ? callPluginpic
+            : a5.Content.includes("Determination.png")
+            ? determinationpic
+            : superpic,
+        },
+        id: a5.ID,
+        position: { x: a5.Left, y: a5.Top },
+        type: "custom",
+      },
+    ];
+  }
 
   const c = q1.map((p: any) => ({
     arrowHeadType: "arrowclosed",
