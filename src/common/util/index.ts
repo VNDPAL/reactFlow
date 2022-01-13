@@ -90,20 +90,22 @@ const getExistingPathway = (existingpathway: any) => {
     ];
   }
 
-  const c = q1.map((p: any) => ({
-    arrowHeadType: "arrowclosed",
-    id: p.BranchId,
-    label: "smoothstep",
-    source: p.SourceID,
-    sourceHandle: p.SourceConnectorName,
-    target: p.SinkID,
-    targetHandle: p.SinkConnectorName,
-    type: "smoothstep",
-  }));
+  if (!q1) {
+    const c = q1.map((p: any) => ({
+      arrowHeadType: "arrowclosed",
+      id: p.BranchId,
+      label: "smoothstep",
+      source: p.SourceID,
+      sourceHandle: p.SourceConnectorName,
+      target: p.SinkID,
+      targetHandle: p.SinkConnectorName,
+      type: "smoothstep",
+    }));
 
-  c.forEach((w: any) => {
-    b.push(w);
-  });
+    c.forEach((w: any) => {
+      b.push(w);
+    });
+  }
 
   console.log(b);
   console.log(a5);
