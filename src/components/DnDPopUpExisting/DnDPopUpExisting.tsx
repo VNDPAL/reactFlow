@@ -15,6 +15,7 @@ const DnDPopUpExisting: FC<DnDPopUpExistingProps> = ({
   onRestore,
 }) => {
   const [pathwayList, setpathwayList] = useState([]);
+  const [openPopup, setOpenPopup] = useState(false);
   const handlePathwayNameChange = async (evt: any) => {
     const pathwayName = evt.target.value;
     const response = await fetch(
@@ -28,8 +29,8 @@ const DnDPopUpExisting: FC<DnDPopUpExistingProps> = ({
   };
 
   useEffect(() => {
-    fetchDataFromBackend();
-  }, []);
+    openPopup && fetchDataFromBackend();
+  }, [openPopup]);
 
   const fetchDataFromBackend = async () => {
     const response = await fetch("https://localhost:7259/GetPathways");
@@ -41,55 +42,59 @@ const DnDPopUpExisting: FC<DnDPopUpExistingProps> = ({
   };
 
   return (
-    <Popup
-      trigger={
-        <button className="DnDPopUp__trigger" title="open existing">
-          <img src={ExistingIcon} alt="" />
-        </button>
-      }
-      modal
-    >
-      {(close: MouseEventHandler<HTMLButtonElement> | undefined) => (
-        <div className="DnDPopUp">
-          <button className="DnDPopUp__close" onClick={close}>
-            &times;
-          </button>
-          <div className="DnDPopUp__header">Open Existing Pathway</div>
-          <div className="DnDPopUp__content">
-            {/* <input
+    <>
+      <button
+        className="DnDPopUp__trigger"
+        title="open existing"
+        onClick={() => {
+          setOpenPopup(true);
+        }}
+      >
+        <img src={ExistingIcon} alt="" />
+      </button>
+      <Popup modal open={openPopup}>
+        {(close: MouseEventHandler<HTMLButtonElement> | undefined) => (
+          <div className="DnDPopUp">
+            <button className="DnDPopUp__close" onClick={close}>
+              &times;
+            </button>
+            <div className="DnDPopUp__header">Open Existing Pathway</div>
+            <div className="DnDPopUp__content">
+              {/* <input
               type="text"
               onChange={onXmlChange}
               placeholder="paste your xml here"
             /> */}
-            <select onChange={handlePathwayNameChange}>
-              <option value="">Select pathway</option>
-              {pathwayList.map((pw: any, key: any) => (
-                <option key={key} value={pw}>
-                  {pw}
-                </option>
-              ))}
-            </select>
+              <select onChange={handlePathwayNameChange}>
+                <option value="">Select pathway</option>
+                {pathwayList.map((pw: any, key: any) => (
+                  <option key={key} value={pw}>
+                    {pw}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="DnDPopUp__actions">
+              <button className="button" onClick={openExistingPath}>
+                confirm
+              </button>
+              <button
+                className="button"
+                onClick={(evt) => {
+                  close?.(evt);
+                  onRestore();
+                }}
+              >
+                Open
+              </button>
+              <button className="button" onClick={close}>
+                close
+              </button>
+            </div>
           </div>
-          <div className="DnDPopUp__actions">
-            <button className="button" onClick={openExistingPath}>
-              confirm
-            </button>
-            <button
-              className="button"
-              onClick={(evt) => {
-                close?.(evt);
-                onRestore();
-              }}
-            >
-              Open
-            </button>
-            <button className="button" onClick={close}>
-              close
-            </button>
-          </div>
-        </div>
-      )}
-    </Popup>
+        )}
+      </Popup>
+    </>
   );
 };
 
