@@ -46,7 +46,7 @@ const getExistingPathway = (existingpathway: any) => {
   const a1 = parseXmlToJson(xmlDoc);
   const a2 = a1.Diagram;
   let a3 = a2.Pages.Page;
-  if (Array.isArray(a3)) {
+  if (!a3.length) {
     a3 = a3[0];
   }
   const q1 = a3.Connections.Connection;
