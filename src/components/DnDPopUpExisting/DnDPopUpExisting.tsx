@@ -52,7 +52,13 @@ const DnDPopUpExisting: FC<DnDPopUpExistingProps> = ({
       >
         <img src={ExistingIcon} alt="" />
       </button>
-      <Popup modal open={openPopup}>
+      <Popup
+        modal
+        open={openPopup}
+        onClose={() => {
+          setOpenPopup(false);
+        }}
+      >
         {(close: MouseEventHandler<HTMLButtonElement> | undefined) => (
           <div className="DnDPopUp">
             <button className="DnDPopUp__close" onClick={close}>
