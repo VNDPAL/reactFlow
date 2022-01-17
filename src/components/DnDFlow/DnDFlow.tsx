@@ -248,16 +248,12 @@ const DnDFlow: FC = () => {
                   if (n.type === "input") return "#0041d0";
                   if (n.type === "output") return "#ff0072";
                   if (n.type === "default") return "#1a192b";
-                  if (n.type === "custom") return "red";
+                  if (n.type === "custom") return "#0bed07";
 
                   return "#eee";
                 }}
-                nodeColor={(n: any) => {
-                  if (n.style?.background) return n.style.background;
-
-                  return "#fff";
-                }}
                 nodeBorderRadius={3}
+                nodeStrokeWidth={8}
               />
               <Controls />
               <Background variant={BackgroundVariant.Lines} />
