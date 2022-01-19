@@ -217,6 +217,19 @@ const DnDFlow: FC = () => {
     [setElements]
   );
 
+  const onRestoreExisting = useCallback(
+    (flow: any) => {
+      const restoreFlow = async () => {
+        const pathway = flow[0].pathway;
+        const [x = 0, y = 0] = pathway.position;
+        setElements(pathway.elements || []);
+      };
+
+      restoreFlow();
+    },
+    [setElements]
+  );
+
   return (
     <div className="dndflow">
       {elements.length && (
@@ -224,6 +237,7 @@ const DnDFlow: FC = () => {
           <Sidebar
             ele={elements}
             restore={onRestore}
+            restoreExisting={onRestoreExisting}
             rfInstance={reactFlowInstance}
           />
           <div className="reactflow-wrapper" ref={reactFlowWrapper}>

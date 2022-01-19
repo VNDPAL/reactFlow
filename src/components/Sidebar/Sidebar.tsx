@@ -11,10 +11,16 @@ import { getExistingPathway } from "../../common/util";
 type SidebarProps = {
   ele: any;
   restore: any;
+  restoreExisting: any;
   rfInstance: any;
 };
 
-const Sidebar: FC<SidebarProps> = ({ ele, restore, rfInstance }) => {
+const Sidebar: FC<SidebarProps> = ({
+  ele,
+  restore,
+  restoreExisting,
+  rfInstance,
+}) => {
   const [pathwayName, setpathwayName] = useState("");
   const [pathwayList, setpathwayList] = useState(
     JSON.parse(localStorage.getItem("reactFlow") || "[]")
@@ -34,9 +40,10 @@ const Sidebar: FC<SidebarProps> = ({ ele, restore, rfInstance }) => {
 
   const openExistingPath = () => {
     const res = getExistingPathway(existingpathway);
-    setpathwayList(() => res);
-    localStorage.setItem("reactFlow", JSON.stringify(res));
-    setselectedpathway("testFromExisting");
+    // setpathwayList(() => res);
+    // localStorage.setItem("reactFlow", JSON.stringify(res));
+    // setselectedpathway("testFromExisting");
+    restoreExisting(res);
   };
 
   const onSave = () => {

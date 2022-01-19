@@ -81,20 +81,14 @@ const DnDPopUpExisting: FC<DnDPopUpExistingProps> = ({
               </select>
             </div>
             <div className="DnDPopUp__actions">
-              <button className="button" onClick={openExistingPath}>
-                confirm
-              </button>
               <button
                 className="button"
                 onClick={(evt) => {
                   close?.(evt);
-                  onRestore();
+                  openExistingPath();
                 }}
               >
-                Open
-              </button>
-              <button className="button" onClick={close}>
-                close
+                confirm
               </button>
             </div>
           </div>
