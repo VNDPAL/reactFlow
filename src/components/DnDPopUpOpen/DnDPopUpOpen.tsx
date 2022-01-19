@@ -16,6 +16,7 @@ const DnDPopUpOpen: FC<DnDPopUpOpenProps> = ({
 }) => {
   return (
     <Popup
+      className="DnDPopUp"
       trigger={
         <button className="DnDPopUp__trigger" title="open">
           <img src={OpenIcon} alt="" />
@@ -24,7 +25,7 @@ const DnDPopUpOpen: FC<DnDPopUpOpenProps> = ({
       modal
     >
       {(close: MouseEventHandler<HTMLButtonElement> | undefined) => (
-        <div className="DnDPopUp">
+        <div className="DnDPopUp__body">
           <button className="DnDPopUp__close" onClick={close}>
             &times;
           </button>

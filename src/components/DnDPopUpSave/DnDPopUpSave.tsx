@@ -11,6 +11,7 @@ type DnDPopUpSaveProps = {
 const DnDPopUpSave: FC<DnDPopUpSaveProps> = ({ onNameChange, onSave }) => {
   return (
     <Popup
+      className="DnDPopUp"
       trigger={
         <button className="DnDPopUp__trigger" title="save">
           <img src={SaveIcon} alt="" />
@@ -19,7 +20,7 @@ const DnDPopUpSave: FC<DnDPopUpSaveProps> = ({ onNameChange, onSave }) => {
       modal
     >
       {(close: MouseEventHandler<HTMLButtonElement> | undefined) => (
-        <div className="DnDPopUp">
+        <div className="DnDPopUp__body">
           <button className="DnDPopUp__close" onClick={close}>
             &times;
           </button>

@@ -1,5 +1,11 @@
 .DnDPopUp {
-  font-size: 12px;
+  &-content {
+    max-width: 250px;
+    margin-top: 200px !important;
+  }
+  &__body {
+    font-size: 12px;
+  }
   &__close {
     cursor: pointer;
     position: absolute;
