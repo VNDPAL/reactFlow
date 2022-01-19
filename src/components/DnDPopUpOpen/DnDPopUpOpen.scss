@@ -1,6 +1,6 @@
 .DnDPopUp {
   &-content {
-    max-width: 500px;
+    max-width: 400px;
     margin-top: 200px !important;
   }
   &__body {
@@ -29,6 +29,9 @@
   &__content {
     width: 100%;
     padding: 10px 5px;
+    select {
+      height: 25px;
+    }
   }
   &__actions {
     width: 100%;
