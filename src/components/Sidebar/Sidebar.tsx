@@ -40,9 +40,6 @@ const Sidebar: FC<SidebarProps> = ({
 
   const openExistingPath = () => {
     const res = getExistingPathway(existingpathway);
-    // setpathwayList(() => res);
-    // localStorage.setItem("reactFlow", JSON.stringify(res));
-    // setselectedpathway("testFromExisting");
     restoreExisting(res);
   };
 
@@ -70,9 +67,7 @@ const Sidebar: FC<SidebarProps> = ({
   const handleSelectedPathway = (evt: any) => {
     setselectedpathway(evt.target.value);
   };
-  // const handleXmlChange = (evt: any) => {
-  //   setexistingpathway(evt.target.value);
-  // };
+
   const handleXmlChange = (evt: any) => {
     setexistingpathway(evt);
   };

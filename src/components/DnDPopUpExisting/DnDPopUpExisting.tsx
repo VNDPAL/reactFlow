@@ -66,11 +66,6 @@ const DnDPopUpExisting: FC<DnDPopUpExistingProps> = ({
             </button>
             <div className="DnDPopUp__header">Open Existing Pathway</div>
             <div className="DnDPopUp__content">
-              {/* <input
-              type="text"
-              onChange={onXmlChange}
-              placeholder="paste your xml here"
-            /> */}
               <select onChange={handlePathwayNameChange}>
                 <option value="">Select pathway</option>
                 {pathwayList.map((pw: any, key: any) => (
@@ -88,7 +83,7 @@ const DnDPopUpExisting: FC<DnDPopUpExistingProps> = ({
                   openExistingPath();
                 }}
               >
-                confirm
+                Open Pathway
               </button>
             </div>
           </div>

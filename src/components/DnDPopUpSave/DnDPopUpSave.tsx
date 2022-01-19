@@ -38,9 +38,6 @@ const DnDPopUpSave: FC<DnDPopUpSaveProps> = ({ onNameChange, onSave }) => {
             >
               Save Pathway
             </button>
-            <button className="button" onClick={close}>
-              close modal
-            </button>
           </div>
         </div>
       )}

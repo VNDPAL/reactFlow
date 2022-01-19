@@ -13,6 +13,7 @@ import ReactFlow, {
   isEdge,
   isNode,
   MiniMap,
+  ControlButton,
 } from "react-flow-renderer";
 import Sidebar from "../Sidebar";
 import SidebarNode from "../SidebarNode";
@@ -22,6 +23,7 @@ import { getNode } from "../../common/util";
 import { SidebarItems } from "../../common/const";
 import CustomNode from "./CustomNode";
 import "./DnDFlow.scss";
+import MinimapIcon from "../../assets/images/minimap.svg";
 
 const DnDFlow: FC = () => {
   const reactFlowWrapper = useRef<any>(null);
@@ -30,6 +32,7 @@ const DnDFlow: FC = () => {
   const [elements, setElements] = useState<any>([]);
   const [nodeDetailsSidebar, setnodeDetailsSidebar] = useState<any>(false);
   const [connectionSidebar, setconnectionSidebar] = useState<any>(false);
+  const [minimapToggle, setminimapToggle] = useState<any>(false);
   const [currentConnection, setcurrentConnection] = useState<any>(null);
   const [currentConnectionText, setcurrentConnectionText] = useState<any>("");
   const [currentDisplayText, setcurrentDisplayText] = useState<any>("");
@@ -256,20 +259,28 @@ const DnDFlow: FC = () => {
               onPaneClick={onPanelClick}
               connectionMode={ConnectionMode.Loose}
             >
-              <MiniMap
-                nodeStrokeColor={(n: any) => {
-                  if (n.style?.background) return n.style.background;
-                  if (n.type === "input") return "#0041d0";
-                  if (n.type === "output") return "#ff0072";
-                  if (n.type === "default") return "#1a192b";
-                  if (n.type === "custom") return "#0bed07";
+              {minimapToggle && (
+                <MiniMap
+                  nodeStrokeColor={(n: any) => {
+                    if (n.style?.background) return n.style.background;
+                    if (n.type === "input") return "#0041d0";
+                    if (n.type === "output") return "#ff0072";
+                    if (n.type === "default") return "#1a192b";
+                    if (n.type === "custom") return "#0bed07";
 
-                  return "#eee";
-                }}
-                nodeBorderRadius={3}
-                nodeStrokeWidth={8}
-              />
-              <Controls />
+                    return "#eee";
+                  }}
+                  nodeBorderRadius={3}
+                  nodeStrokeWidth={8}
+                />
+              )}
+              <Controls>
+                <ControlButton
+                  onClick={() => setminimapToggle(() => !minimapToggle)}
+                >
+                  <img className="minimap" src={MinimapIcon} />
+                </ControlButton>
+              </Controls>
               <Background variant={BackgroundVariant.Lines} />
             </ReactFlow>
           </div>

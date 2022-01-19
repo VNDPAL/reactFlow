@@ -49,9 +49,6 @@ const DnDPopUpOpen: FC<DnDPopUpOpenProps> = ({
             >
               Open
             </button>
-            <button className="button" onClick={close}>
-              close
-            </button>
           </div>
         </div>
       )}
